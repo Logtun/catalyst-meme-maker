@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Catalyst Meme &amp; Sticker Maker · fan-made</title>
+<meta name="description" content="Make Catalyst memes and stickers on your phone. Original Catalyst templates, WhatsApp WebP stickers and Discord PNGs. Everything stays on your device. Fan-made by @iamlogtun, not official.">
+<meta name="theme-color" content="#0e0e0e">
+<link rel="canonical" href="https://catalyst-meme-maker.vercel.app/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://catalyst-meme-maker.vercel.app/">
+<meta property="og:title" content="Catalyst Meme &amp; Sticker Maker">
+<meta property="og:description" content="Original Catalyst meme templates + ready-made stickers for WhatsApp and Discord. Fan-made by @iamlogtun, not official.">
+<meta property="og:image" content="https://catalyst-meme-maker.vercel.app/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Catalyst Meme &amp; Sticker Maker">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Catalyst Meme &amp; Sticker Maker">
+<meta name="twitter:description" content="Original Catalyst meme templates + stickers for WhatsApp and Discord. Fan-made, not official.">
+<meta name="twitter:image" content="https://catalyst-meme-maker.vercel.app/og.jpg">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-96.png" sizes="96x96" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preload" href="assets/bdo-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/anton.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body>
+<div class="bg-grid" aria-hidden="true"></div>
+<header class="top">
+  <a class="brand" href="https://catalyst.app/" target="_blank" rel="noopener" aria-label="Catalyst (official site)">
+    <img src="assets/catalyst-mark.svg" alt="" width="28" height="28" class="mark">
+    <img src="assets/catalyst-word.svg" alt="Catalyst" class="word" width="96" height="25">
+  </a>
+  <span class="tag">Fan-made</span>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Meme &amp; Sticker <span>Maker</span></h1>
+    <p>Original Catalyst templates, stickers for WhatsApp and Discord. Everything is made on your phone; your images never leave it.</p>
+  </section>
+
+  <div class="modes" role="tablist" aria-label="Mode">
+    <button role="tab" id="tabMeme" aria-selected="true" aria-controls="memePanel" class="mode on">Memes</button>
+    <button role="tab" id="tabSticker" aria-selected="false" aria-controls="stickerPanel" class="mode">Stickers</button>
+  </div>
+
+  <!-- MEME MODE -->
+  <section id="memePanel" role="tabpanel" aria-labelledby="tabMeme" class="panel">
+    <h2 class="h">1 · Pick a template</h2>
+    <div class="tpls" id="tpls"></div>
+    <label class="btn btn-ghost upload"><input type="file" accept="image/*" id="memeUpload" hidden>
+      <svg viewBox="0 0 24 24"><path d="M12 16V4M6 10l6-6 6 6M4 20h16"/></svg> Use my own image</label>
+
+    <h2 class="h">2 · Add your text</h2>
+    <div class="stage"><canvas id="memeCanvas" width="1080" height="1080" aria-label="Meme preview"></canvas></div>
+    <p class="hint">Drag any text on the image to move it.</p>
+    <div id="boxes" class="boxes"></div>
+    <div class="row">
+      <button class="btn btn-ghost btn-sm" id="addBox" type="button">+ Add text box</button>
+      <label class="size">Size <input type="range" id="boxSize" min="28" max="180" value="96" aria-label="Text size of selected box"></label>
+    </div>
+    <div class="row opts">
+      <div class="seg" role="group" aria-label="Text style">
+        <button type="button" class="segb on" data-style="classic">Classic</button>
+        <button type="button" class="segb" data-style="brand">Catalyst</button>
+      </div>
+      <label class="chk"><input type="checkbox" id="wm" checked> Catalyst mark</label>
+    </div>
+
+    <h2 class="h">3 · Save &amp; share</h2>
+    <div class="actions">
+      <button class="btn btn-primary" id="dlMeme" type="button"><svg viewBox="0 0 24 24"><path d="M12 4v12M6 10l6 6 6-6M4 20h16"/></svg> Download PNG</button>
+      <button class="btn btn-ghost" id="shareMeme" type="button" hidden>Share image</button>
+      <a class="btn btn-x" id="postX" target="_blank" rel="noopener" href="#">Post on X</a>
+    </div>
+    <p class="hint">X can't take an image through a link, so download first, then attach it to your post. The post tags @catalystapp.</p>
+  </section>
+
+  <!-- STICKER MODE -->
+  <section id="stickerPanel" role="tabpanel" aria-labelledby="tabSticker" class="panel" hidden>
+    <h2 class="h">Ready-made stickers</h2>
+    <p class="sub">Each one: a 512×512 WebP with a transparent background for WhatsApp (under 100 KB), and a 320×320 PNG for Discord.</p>
+    <div class="stks" id="stks"></div>
+    <a class="btn btn-primary btn-lg" id="dlAll" href="stickers/catalyst-stickers.zip" download><svg viewBox="0 0 24 24"><path d="M12 4v12M6 10l6 6 6-6M4 20h16"/></svg> Download all stickers (zip)</a>
+
+    <h2 class="h">Make your own sticker</h2>
+    <div class="maker">
+      <div class="stage chk-bg"><canvas id="stkCanvas" width="512" height="512" aria-label="Sticker preview"></canvas></div>
+      <div class="fields">
+        <label class="lbl">Text<input type="text" id="stkText" maxlength="40" value="Catalyst fam" autocomplete="off"></label>
+        <div class="swatches" role="group" aria-label="Text colour">
+          <button type="button" class="sw on" data-c="#fa5000" style="--c:#fa5000" aria-label="Orange"></button>
+          <button type="button" class="sw" data-c="#ffffff" style="--c:#ffffff" aria-label="White"></button>
+          <button type="button" class="sw" data-c="#74aad8" style="--c:#74aad8" aria-label="Blue"></button>
+          <button type="button" class="sw" data-c="#ffbe5b" style="--c:#ffbe5b" aria-label="Yellow"></button>
+          <button type="button" class="sw" data-c="#2ecc71" style="--c:#2ecc71" aria-label="Green"></button>
+        </div>
+        <label class="btn btn-ghost btn-sm upload"><input type="file" accept="image/*" id="stkUpload" hidden>+ Add my image</label>
+        <button type="button" class="btn btn-ghost btn-sm" id="stkClear" hidden>Remove image</button>
+        <label class="chk"><input type="checkbox" id="stkMark"> Add Catalyst mark</label>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" id="dlWebp" type="button">WebP 512 · WhatsApp</button>
+      <button class="btn btn-ghost" id="dlPng" type="button">PNG 320 · Discord</button>
+    </div>
+    <p class="hint" id="stkInfo" aria-live="polite"></p>
+    <details class="how"><summary>How to add them</summary>
+      <p><b>WhatsApp:</b> WhatsApp adds custom stickers through a sticker-pack app or its own sticker maker. Import the WebP files (a pack needs at least 3).</p>
+      <p><b>Discord:</b> Server Settings → Stickers (or Emoji) → Upload, and pick the 320×320 PNG.</p>
+    </details>
+  </section>
+</main>
+
+<footer class="foot">
+  <p>Fan-made by <a href="https://x.com/iamlogtun" target="_blank" rel="noopener">@iamlogtun</a> · not official · Catalyst is at <a href="https://catalyst.app/" target="_blank" rel="noopener">catalyst.app</a></p>
+  <p class="fine">Jokes only, not financial advice. Catalyst's Earn says "up to" 8% APY; rates can change. Follow <a href="https://x.com/catalystapp" target="_blank" rel="noopener">@catalystapp</a>.</p>
+</footer>
+<script src="app.js?v=1"></script>
+</body>
+</html>
